@@ -1,0 +1,4 @@
+<?php require '../includes/auth.php'; require_login('pembeli'); require '../config/database.php'; include '../includes/header.php'; include '../includes/navbar.php'; ?>
+<div class="container py-5"><h2>pesanan saya</h2><div class="card p-3 mt-3"><table class="table align-middle"><thead><tr><th>id</th><th>tanggal</th><th>total</th><th>status</th><th>aksi</th></tr></thead><tbody>
+<?php $s=$pdo->prepare("select * from orders where user_id=? order by id desc");$s->execute([$_SESSION['user']['id']]);while($o=$s->fetch()): ?><tr><td>#<?=$o['id']?></td><td><?=$o['created_at']?></td><td>rp <?=number_format($o['total_price'],0,',','.')?></td><td><span class="badge badge-status"><?=$o['status']?></span></td><td><?php if($o['status']==='menunggu pembayaran'):?><a class="btn btn-sm btn-primary" href="payment.php?id=<?=$o['id']?>">bayar</a><?php endif;?></td></tr><?php endwhile; ?>
+</tbody></table></div></div><?php include '../includes/footer.php'; ?>

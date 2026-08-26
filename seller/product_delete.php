@@ -1,0 +1,1 @@
+<?php require '../includes/auth.php'; require_login('penjual'); require '../config/database.php';$id=(int)$_GET['id'];$s=$pdo->prepare("delete from products where id=? and seller_id=?");$s->execute([$id,$_SESSION['user']['id']]);header('location: products.php');exit;?>
